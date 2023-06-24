@@ -6,6 +6,9 @@ const btnComprar = document.querySelectorAll(".btn-comprar");
 const form = document.getElementById('artworkForm');
 //tabla que contiene las obras de arte
 const tableBody = document.querySelector('#artworkTable tbody');
+//boton del formulario de filtro
+const btnFiltro = document.querySelector('.filtros');
+
 
         
 
@@ -19,6 +22,19 @@ if (btnComprar !== null) {
           };
     });
 } 
+
+//al dar click abre el formulario
+if(btnFiltro !== null){
+    btnFiltro.addEventListener('click',()=>{
+        var formulario = document.querySelector(".filtros-campos-container");
+            if (formulario.style.display === "none") {
+                formulario.style.display = "block";
+            } else {
+                formulario.style.display = "none";
+            }
+    })
+}
+
 
 // crea y añade  los elemetos en la tabla de las obras
 
