@@ -328,7 +328,7 @@ nav label {
 }
 
 .wrapper.active {
-  height: 60rem;
+  height: 70rem;
 }
 
 .wrapper .form-box {
@@ -1042,7 +1042,7 @@ a.obra {
 
 .info__artist {
   padding: 1rem;
-  background-image: url("/img/rahul-jain.png");
+  background-image: url("../img/rahul-jain.png");
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
@@ -1055,15 +1055,15 @@ a.obra {
 }
 
 .info__artist:nth-child(2) {
-  background-image: url(/img/manuel-lopez.png);
+  background-image: url("../img/manuel-lopez.png");
 }
 
 .info__artist:nth-child(3) {
-  background-image: url(/img/arielreyes.png);
+  background-image: url("../img/arielreyes.png");
 }
 
 .info__artist:nth-child(4) {
-  background-image: url(/img/jason-pereira.png);
+  background-image: url("../img/jason-pereira.png");
 }
 
 .info__artist-name {
@@ -1522,7 +1522,7 @@ footer h3 {
 /* Inicio artista.html */
 .rhal{
   padding: 2REM;
-   background-image: url('/img/rahul-jain.png');
+   background-image: url('../img/rahul-jain.png');
    background-repeat: no-repeat;
    background-size: cover;
    background-position: center;
