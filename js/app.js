@@ -115,7 +115,7 @@ if (btnComprar !== null) {
   });
 }
 
-//al dar click abre el formulario
+//al dar click abre el formulario de los filtros
 if (btnFiltro !== null) {
   btnFiltro.addEventListener("click", () => {
     var formulario = document.querySelector(".filtros-campos-container");
@@ -137,51 +137,99 @@ if (form !== null) {
     const price = document.getElementById("price").value;
     const size = document.getElementById("size").value;
     const description = document.getElementById("description").value;
-    const image = document.getElementById("image").files[0];
+    const images = document.getElementById("image").files;
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const imgSrc = e.target.result;
-      const newRow = createTableRow(imgSrc, name, price, size, description);
+    // Validar que solo se seleccionen archivos de imagen
+    const validImageTypes = ["image/jpeg", "image/png", "image/gif"];
+    const selectedImages = Array.from(images).filter((file) =>
+      validImageTypes.includes(file.type)
+    );
+    if (selectedImages.length !== images.length) {
+      alert("Por favor, selecciona solo archivos de imagen.");
+      return;
+    }
+
+    const imagePromises = Array.from(selectedImages).map((image) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          resolve(e.target.result);
+        };
+        reader.onerror = function (e) {
+          reject(e);
+        };
+        reader.readAsDataURL(image);
+      });
+    });
+
+    Promise.all(imagePromises).then((results) => {
+      const newRow = createTableRow(results, name, price, size, description);
       tableBody.appendChild(newRow);
       form.reset();
-    };
-    reader.readAsDataURL(image);
+    });
   });
-}
 
-function createTableRow(imgSrc, name, price, size, description) {
-  const row = document.createElement("tr");
+  function createTableRow(imgSrcArray, name, price, size, description) {
+    const row = document.createElement("tr");
 
-  const imageCell = document.createElement("td");
-  const image = document.createElement("img");
-  image.src = imgSrc;
-  imageCell.appendChild(image);
-  row.appendChild(imageCell);
+    const imageCell = document.createElement("td");
+    const imageContainer = document.createElement("div");
+    imageContainer.classList.add("image-container");
+    imgSrcArray.forEach((imgSrc) => {
+      const imageItem = document.createElement("div");
+      imageItem.classList.add("image-item");
 
-  const nameCell = document.createElement("td");
-  nameCell.textContent = name;
-  row.appendChild(nameCell);
+      const image = document.createElement("img");
+      image.src = imgSrc;
+      imageItem.appendChild(image);
+      
+      const deleteButton = document.createElement("button");
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add("fas", "fa-circle-xmark");
+      deleteButton.appendChild(deleteIcon);
+      deleteButton.classList.add("delete-button");
+      deleteButton.addEventListener("click", function () {
+        imageItem.remove();
+      });
+      imageItem.appendChild(deleteButton);
 
-  const priceCell = document.createElement("td");
-  priceCell.textContent = price;
-  row.appendChild(priceCell);
+      imageContainer.appendChild(imageItem);
+    });
+    imageCell.appendChild(imageContainer);
+    row.appendChild(imageCell);
 
-  const sizeCell = document.createElement("td");
-  sizeCell.textContent = size;
-  row.appendChild(sizeCell);
+    const nameCell = document.createElement("td");
+    nameCell.textContent = name;
+    row.appendChild(nameCell);
 
-  const descriptionCell = document.createElement("td");
-  descriptionCell.textContent = description;
-  row.appendChild(descriptionCell);
+    const priceCell = document.createElement("td");
+    priceCell.textContent = price;
+    row.appendChild(priceCell);
 
-  return row;
+    const sizeCell = document.createElement("td");
+    sizeCell.textContent = size;
+    row.appendChild(sizeCell);
+
+    const descriptionCell = document.createElement("td");
+    descriptionCell.textContent = description;
+    row.appendChild(descriptionCell);
+
+    const actionsCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Eliminar";
+    deleteButton.addEventListener("click", function () {
+      row.remove();
+    });
+    actionsCell.appendChild(deleteButton);
+    row.appendChild(actionsCell);
+
+    return row;
+  }
 }
 
 //Controlando el login
 
 window.addEventListener("DOMContentLoaded", function () {
-  
   var loginButton = document.getElementById("loginButton");
   var loginPopup = document.querySelector(".popup");
   var closeButton = document.querySelector(".icon-close");
