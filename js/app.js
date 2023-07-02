@@ -64,7 +64,6 @@ function stopCamera() {
   }
 }
 
-//-------------formulario de registro-------------------
 const formRegister = document.querySelector("#registerForm");
 if (formRegister !== null) {
   formRegister.addEventListener("submit", function (event) {
@@ -87,59 +86,53 @@ if (formRegister !== null) {
         "El nombre de usuario debe contener entre 3 y 20 caracteres alfanuméricos (letras, números y guiones bajos).";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (!regexEmail.test(email)) {
+    } else if (!regexEmail.test(email)) {
       messageElement.textContent =
         "El correo electrónico debe ser una dirección de Gmail válida.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (password !== confirmPassword) {
+    } else if (password !== confirmPassword) {
       messageElement.textContent = "Las contraseñas no coinciden.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (password.length < 8) {
+    } else if (password.length < 8) {
       messageElement.textContent =
         "La contraseña debe tener al menos 8 caracteres.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (!regexUppercase.test(password)) {
+    } else if (!regexUppercase.test(password)) {
       messageElement.textContent =
         "La contraseña debe contener al menos una mayúscula.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (!regexNumber.test(password)) {
+    } else if (!regexNumber.test(password)) {
       messageElement.textContent =
         "La contraseña debe contener al menos un número.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
-    }
-
-    if (termsCheckbox.checked === false) {
+    } else if (!termsCheckbox.checked) {
       messageElement.textContent =
         "Debes aceptar los términos y condiciones.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-      return;
+    } else {
+      messageElement.textContent = "Registro exitoso.";
+      messageElement.style.color = "green";
+      messageElement.style.marginBottom = "2rem";
+
+      // Limpiar los campos del formulario
+      formRegister.reset();
     }
-    alert("Registro exitoso");
-    formRegister.reset(); // Limpia todos los campos del formulario
+  });
+
+  // Event listener para ocultar el mensaje de error cuando un elemento tenga el foco
+  formRegister.addEventListener("focusin", function () {
+    let messageElement = document.getElementById("message");
+    messageElement.textContent = "";
   });
 }
+
+
 
 
 
