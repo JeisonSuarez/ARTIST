@@ -70,40 +70,79 @@ if (formRegister !== null) {
   formRegister.addEventListener("submit", function (event) {
     event.preventDefault(); // Evita el envío del formulario
 
-    var password = document.getElementById("password").value;
-    var confirmPassword = document.getElementById("confirmPassword").value;
+    let username = document.querySelector(".userName").value;
+    let email = document.querySelector(".email").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let termsCheckbox = document.querySelector('input[type="checkbox"]');
+    let messageElement = document.getElementById("message");
 
-    var messageElement = document.getElementById("message");
+    let regexUsername = /^[a-zA-Z0-9_]{3,20}$/; // Expresión regular para validar el nombre de usuario
+    let regexEmail = /^[a-zA-Z0-9_.+-]+@gmail.com$/; // Expresión regular para validar el correo electrónico de Gmail
+    let regexUppercase = /[A-Z]/;
+    let regexNumber = /[0-9]/;
 
-    var regexUppercase = /[A-Z]/;
-    var regexNumber = /[0-9]/;
+    if (!regexUsername.test(username)) {
+      messageElement.textContent =
+        "El nombre de usuario debe contener entre 3 y 20 caracteres alfanuméricos (letras, números y guiones bajos).";
+      messageElement.style.color = "red";
+      messageElement.style.marginBottom = "2rem";
+      return;
+    }
+
+    if (!regexEmail.test(email)) {
+      messageElement.textContent =
+        "El correo electrónico debe ser una dirección de Gmail válida.";
+      messageElement.style.color = "red";
+      messageElement.style.marginBottom = "2rem";
+      return;
+    }
 
     if (password !== confirmPassword) {
       messageElement.textContent = "Las contraseñas no coinciden.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-    } else if (password.length < 8) {
+      return;
+    }
+
+    if (password.length < 8) {
       messageElement.textContent =
         "La contraseña debe tener al menos 8 caracteres.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-    } else if (!regexUppercase.test(password)) {
+      return;
+    }
+
+    if (!regexUppercase.test(password)) {
       messageElement.textContent =
         "La contraseña debe contener al menos una mayúscula.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-    } else if (!regexNumber.test(password)) {
+      return;
+    }
+
+    if (!regexNumber.test(password)) {
       messageElement.textContent =
         "La contraseña debe contener al menos un número.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
-    } else {
-      messageElement.textContent = "Contraseña válida.";
-      messageElement.style.color = "green";
-      messageElement.style.marginBottom = "2rem";
+      return;
     }
+
+    if (termsCheckbox.checked === false) {
+      messageElement.textContent =
+        "Debes aceptar los términos y condiciones.";
+      messageElement.style.color = "red";
+      messageElement.style.marginBottom = "2rem";
+      return;
+    }
+    alert("Registro exitoso");
+    formRegister.reset(); // Limpia todos los campos del formulario
   });
 }
+
+
+
 
 //funciones
 //al dar click abre el carrito de compra
@@ -182,7 +221,7 @@ if (form !== null) {
       const image = document.createElement("img");
       image.src = imgSrc;
       imageItem.appendChild(image);
-      
+
       const deleteButton = document.createElement("button");
       const deleteIcon = document.createElement("i");
       deleteIcon.classList.add("fas", "fa-circle-xmark");
