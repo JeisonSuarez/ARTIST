@@ -20,10 +20,7 @@ const cameraVideo = document.getElementById("cameraVideo");
 
 const icono = document.querySelector(".profile-image i.fa-user");
 
-function openCameraModal() {
-  cameraModal.style.display = "block";
-  startCamera();
-}
+
 
 function startCamera() {
   navigator.mediaDevices
@@ -111,8 +108,7 @@ if (formRegister !== null) {
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
     } else if (!termsCheckbox.checked) {
-      messageElement.textContent =
-        "Debes aceptar los términos y condiciones.";
+      messageElement.textContent = "Debes aceptar los términos y condiciones.";
       messageElement.style.color = "red";
       messageElement.style.marginBottom = "2rem";
     } else {
@@ -131,11 +127,6 @@ if (formRegister !== null) {
     messageElement.textContent = "";
   });
 }
-
-
-
-
-
 
 //funciones
 //al dar click abre el carrito de compra
