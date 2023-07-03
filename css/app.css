@@ -391,6 +391,7 @@ h2 ~ i.fa-user {
 .btn-login {
   background: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .input-box h2 {
