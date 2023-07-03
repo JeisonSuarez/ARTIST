@@ -47,6 +47,10 @@ h3 {
 p {
   margin: 0;
 }
+
+p::first-letter {
+  text-transform: capitalize;
+}
 h1 {
   font-size: 3.2rem;
 }
@@ -1262,9 +1266,7 @@ footer h3 {
   }
 
   @media (min-width: 1110px) {
-    .sections {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    
 
     .main.main-obras {
       display: grid;
@@ -1284,6 +1286,12 @@ footer h3 {
     }
     .obra-sections__info-text {
       width: 30rem;
+    }
+
+    @media (min-width:1350px){ 
+      .sections {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
   }
 }
